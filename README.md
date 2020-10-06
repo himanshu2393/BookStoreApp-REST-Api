@@ -44,6 +44,8 @@ $ git clone https://github.com/himanshu2393/BookStoreApp-REST-Api.git
   $ docker build -t backend:latest backend
 
   ```
+  ![docker build](/images/docker_build.png)
+  
   3. Then you can run the container using the image built by exposing the port 8080 (on your host from container). 
   4. You can have any other port like 8000 if 8080 is not free on your machine, but that will require change in the Dockerfile (wherever 8080 is there replace with 8000).
   5. But lets run unit tests and bdd tests before running the app.
