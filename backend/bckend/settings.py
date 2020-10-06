@@ -9,12 +9,11 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+# importing the required libraries
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -25,6 +24,7 @@ SECRET_KEY = 'eb6fj#9mkxyyw18_xb+^ejd=yw4u3kih2-tb-dfhg7)!e6!7qw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# For test purpose all hosts are allowed ['*']
 ALLOWED_HOSTS = ['*']
 
 
@@ -37,12 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'rest_framework',
-	'rest_framework.authtoken',
-	'behave_django',
-	'django_filters',
-	'django_countries',
-	'db_api.apps.DbApiConfig',
+	'rest_framework', # app for django rest framework
+	'rest_framework.authtoken', # authentication app from rest_framework
+	'behave_django', # behave_django app is a wrapper for behave for django projects
+	'django_filters', # app for django filters to apply filters on model objects
+	'django_countries', # app to use CountryField in models to validate correct country name input
+	'db_api.apps.DbApiConfig', # our main app 
 ]
 
 MIDDLEWARE = [
@@ -80,8 +80,9 @@ AUTH_USER_MODEL = 'db_api.Customer'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = 'email' # overriding the username field with email for our custom user model 'Customer'
 
+# For user authentication, we have specified our custom serializers here 
 REST_AUTH_SERIALIZERS = {
     "USER_DETAILS_SERIALIZER": "db_api.serializers.CustomerLoginSerializer",
 }
@@ -89,11 +90,13 @@ REST_AUTH_REGISTER_SERIALIZERS = {
     "REGISTER_SERIALIZER": "db_api.serializers.CustomeRegisterSerializer",
 }
 
+# redirect url path from login page
 LOGIN_REDIRECT_URL = ('/api/v1/bookcollection')
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# Using default sqllite db here 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -143,6 +146,7 @@ DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 STATIC_URL = '/static/'
 #'rest_framework.authentication.BasicAuthentication',
 
+# all the rest framework filter, exception_handlers, and authentication classes are declared here.
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
 	'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',

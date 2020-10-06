@@ -1,6 +1,5 @@
 # -- FILE: features/steps/list_all_books_steps.py
 from behave import given, when, then, step
-
 from django.test import TestCase
 from datetime import datetime, timedelta
 import json
@@ -17,13 +16,15 @@ from django.core.serializers.json import DjangoJSONEncoder
 def step_impl(context):
 	# Create one user
 	context.client = APIClient()
-
 	test_user1 = models.Customer.objects.create_user(email='testuser1@email.com', password='abc@123', firstname='test1', country='Australia')
 	test_user1.save()
-
+	
+	# generating token for user
 	context.user = test_user1
 	context.token = Token.objects.create(user=context.user)
 	context.token.save()
+	
+	# authenticating the user
 	context.client.force_authenticate(context.user, context.token.key)
 		
 
@@ -33,26 +34,27 @@ def step_impl(context):
 
 @then('gets all the books returned with response status as 200.')
 def step_impl(context):
+	# querying the endpoint
 	response = context.client.get(reverse('collection-list'), HTTP_AUTHORIZATION=context.token)
-	print(response.status_code)
 	assert response.status_code == 200
 
 # --- Scenario -2 ----------
 
 @given('the user is not logged in')
 def step_impl(context):
+	# creating user
 	context.client = APIClient()
 	test_user1 = models.Customer.objects.create_user(email='testuser1@email.com', password='abc@123', firstname='test1', country='Australia')
 	test_user1.save()
+	
+	# generating token
 	context.user = test_user1
 	context.token = Token.objects.create(user=context.user)
 	context.token.save()
-	#context.client.force_authenticate(context.user, context.token.key)
 
 @when('user visits url /api/v1/bookcollection/')
 def step_impl(context):
 	pass
-	#context.client.force_authenticate(context.user)
 
 @then('user gets authentication error')
 def step_impl(context):

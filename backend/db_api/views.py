@@ -1,3 +1,4 @@
+# import required libraries
 from django.shortcuts import render,redirect
 from django.contrib.auth import get_user_model, logout
 from django_filters import rest_framework as filters
@@ -24,7 +25,9 @@ from rest_framework.response import Response
 
 # Creating viewsets here.
 class RegisterViewSet(ModelViewSet):
-	"""Add a user here. (Only superuser can see other user details and logged out users can register as new users.)"""
+	"""Add a user here. (Only superuser can see other user details and 
+	   logged out users can register as new users.)
+	"""
 	model = models.Customer
 	permission_classes = [AllowAny, ]
 	serializer_class = serializers.CustomerRegisterSerializer
@@ -32,6 +35,7 @@ class RegisterViewSet(ModelViewSet):
 		'register': serializers.CustomerRegisterSerializer,
     }
 	
+	# get queryset to list the objects returned as response by the endpoint
 	def get_queryset(self):
 		user = self.request.user
 		if user.is_superuser:
@@ -40,6 +44,7 @@ class RegisterViewSet(ModelViewSet):
 		else:
 			return None
 	
+	# creates the customer 
 	def create(self, request):
 		user = self.request.user
 		if str(user) == 'AnonymousUser':

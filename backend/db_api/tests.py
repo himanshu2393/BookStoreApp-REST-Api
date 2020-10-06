@@ -1,3 +1,4 @@
+# import required libraries
 from django.test import TestCase
 from datetime import datetime, timedelta
 import json
@@ -13,6 +14,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 # test the bookcollection API endpoint and its actions generated
 class BookCollectionListSearchViewSetTest(TestCase):
+	""" Validates all the unit test cases for the 4 features of the app"""
+	
 	def setUp(self):
 		# Create two users
 		self.client = APIClient()

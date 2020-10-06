@@ -1,6 +1,5 @@
 # -- FILE: features/steps/del_book_steps.py
 from behave import given, when, then, step
-
 from django.test import TestCase
 from datetime import datetime, timedelta
 import json
@@ -17,13 +16,15 @@ from django.core.serializers.json import DjangoJSONEncoder
 def step_impl(context):
 	# Create one user
 	context.client = APIClient()
-
 	test_user1 = models.Customer.objects.create_user(email='testuser1@email.com', password='abc@123', firstname='test1', country='Australia')
 	test_user1.save()
 
+	# generate auth token for the user
 	context.user = test_user1
 	context.token = Token.objects.create(user=context.user)
 	context.token.save()
+	
+	# authenticate the user
 	context.client.force_authenticate(context.user, context.token.key)
 	
 	# Add a book in the collection of test_user1 created above
@@ -37,13 +38,16 @@ def step_impl(context):
 		
 @when('user enters wrong ISBN')
 def step_impl(context): 
+	# creating incorrect and correct ISBN number to be passed as payload
 	context.incorrect_payload = {'isbn':'978061538010'}
 	context.correct_payload = {'isbn':'9780615380100'}
 	context.client.force_authenticate(context.user)
 
 @then("book will not be deleted from the database from the user's collection")
 def step_impl(context):
+	# querying the endpoint
 	context.client.post('/api/v1/bookcollection/delete_record/', context.incorrect_payload, HTTP_AUTHORIZATION=context.token)
+	# querying the model
 	exists = models.BookCollection.objects.filter(email = context.user).filter(isbn = context.correct_payload['isbn']).exists()
 	assert True is exists
 	
@@ -53,13 +57,15 @@ def step_impl(context):
 def step_impl(context):
 	# Create one user
 	context.client = APIClient()
-
 	test_user1 = models.Customer.objects.create_user(email='testuser1@email.com', password='abc@123', firstname='test1', country='Australia')
 	test_user1.save()
-
+	
+	# generate token for the user
 	context.user = test_user1
 	context.token = Token.objects.create(user=context.user)
 	context.token.save()
+	
+	# authenticate the user
 	context.client.force_authenticate(context.user, context.token.key)
 	
 	# Add a book in the collection of test_user1 created above
@@ -73,13 +79,15 @@ def step_impl(context):
 		
 @when('user enters correct ISBN')
 def step_impl(context): 
+	# creating payload
 	context.payload = {'isbn':'9780615380100'}
 	context.client.force_authenticate(context.user)
-	#assert True is not False
 
 @then("book will be deleted from the database from the user's collection")
 def step_impl(context):
+	# querying the endpoint
 	context.client.post('/api/v1/bookcollection/delete_record/', context.payload, HTTP_AUTHORIZATION=context.token)
+	# querying the model
 	exists = models.BookCollection.objects.filter(email = context.user).filter(isbn = context.payload['isbn']).exists()
 	assert False is exists
 	

@@ -11,11 +11,11 @@ def get_book_details_seq(isbn):
 	url = GOOGLE_BOOKS_URL + isbn
 	response = None
 	
+	# querying the GoogleBooks API
 	with requests.Session() as session:
 		try:
 			response = session.get(url)
 			response.raise_for_status()
-			#print(f"Response status ({url}): {response.status_code}")
 		except HTTPError as http_err:
 			print(f"HTTP error occurred: {http_err}")
 		except Exception as err:
@@ -23,24 +23,22 @@ def get_book_details_seq(isbn):
 		response_json = response.json()
 		items = response_json.get("items", [{}])[0]
 		
+		# if no items then retuen None
 		if items == None:
 			print('Invalid ISBN number')
 			return None
 		else:
-			#item = response
 			volume_info = items.get("volumeInfo", {})
 			title = volume_info.get("title", None)
 			author = volume_info.get("authors", None)
 			
 			return (title, author)
 
-
+# custom exception class to raise the error of book not found when GoogleBooks API 
+# does not vaidate the ISBN number passed 
 class BookNotFound(APIException):
     status_code = 400
     default_detail = "Unable to find the book in Google Books API."
     default_code = "Bad_ISBN_number"
 
-#parsed_response = get_book_details_seq('9780002005883')
-#print('Title: ', parsed_response[0])
-#print('Authors: ', parsed_response[1])
 
