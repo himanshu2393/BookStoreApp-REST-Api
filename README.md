@@ -13,7 +13,7 @@ BookStoreApp (backend) gives the REST API endpoints for the customers of the boo
 Unit tests covers, how the below mentioned features will respond in the system and behaviour driven test cases are covering different scenarios, the end user might encounter
 while using the below mentioned features.
 
-- The files which covers the testcases:
+The files which covers the testcases:
     - unit tests: /bckend/db_api/tests.py
     - bdd tests: /bckend/features
 
@@ -83,10 +83,10 @@ $ git clone https://github.com/himanshu2393/BookStoreApp-REST-Api.git
   ```
   7. Using this IP, you can access the app running in the container on your host machine. (http://192.168...:8080/api/v1/)
   8. Browsable API URLs:
-    - /api/v1/bookcollection/ (logged in users can access, and can list or add books)
-    - /api/v1/bookcollection/search/  (logged in users can search or filter on the books, added in last N days)
-    - /api/v1/bookcollection/delete_record/ (logged in users can delete a book from the collection)
-    - /api/v1/register/ (To register the customer, and only logged out customers can access)
+    - /api/v1/bookcollection/ (logged in users can access, and can list or add books).
+    - /api/v1/bookcollection/search/  (logged in users can search or filter on the books, added in last N days).
+    - /api/v1/bookcollection/delete_record/ (logged in users can delete a book from the collection).
+    - /api/v1/register/ (To register the customer, and only logged out customers can access).
   
   
   
