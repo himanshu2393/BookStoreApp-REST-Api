@@ -85,10 +85,10 @@ $ git clone https://github.com/himanshu2393/BookStoreApp-REST-Api.git
   ```
   7. Using this IP, you can access the app running in the container on your host machine. (http://192.168...:8080/api/v1/)
   8. Browsable API URLs:
-    - /api/v1/bookcollection/ (logged in users can access, and can list or add books).
-    - /api/v1/bookcollection/search/  (logged in users can search or filter on the books, added in last N days).
-    - /api/v1/bookcollection/delete_record/ (logged in users can delete a book from the collection).
-    - /api/v1/register/ (To register the customer, and only logged out customers can access).
+  - **List:** /api/v1/bookcollection/ (logged in users can access, and can list or add books).
+  - **Search:** /api/v1/bookcollection/search/  (logged in users can search or filter on the books, added in last N days).
+  - **Delete:** /api/v1/bookcollection/delete_record/ (logged in users can delete a book from the collection).
+  - **Register** Customer: /api/v1/register/ (To register the customer, and only logged out customers can access).
   
   
   
