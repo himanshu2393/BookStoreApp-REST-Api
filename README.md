@@ -1,0 +1,2 @@
+# BookStoreApp-REST-Api
+BookStoreApp (backend) gives the REST API endpoints for the customers of the bookstore to keep a track of what all books they have read. They can add, delete, and search the books in their collection. This is the backend of the app based on Django Rest Framework and can be dockerized using the Dockerfile (included). This project also involves both Test Driven Development (TDD) and Behaviour Driven Development (BDD) testcases.
