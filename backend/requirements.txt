@@ -1,0 +1,7 @@
+django
+djangorestframework
+django-countries
+git+https://github.com/behave/behave
+behave-django
+django-filter
+requests
